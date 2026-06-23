@@ -1,0 +1,84 @@
+@page
+@model ControleTeste.Pages.Relatorios.IndexModel
+
+<h1>Relatórios de Alterações</h1>
+
+<form method="get" class="row g-3 mb-3">
+    <div class="col-md-2">
+        <label>De</label>
+        <input asp-for="Filter.DateFrom" type="date" class="form-control" />
+    </div>
+    <div class="col-md-2">
+        <label>Até</label>
+        <input asp-for="Filter.DateTo" type="date" class="form-control" />
+    </div>
+    <div class="col-md-2">
+        <label>Status</label>
+        <select asp-for="Filter.Status" class="form-select">
+            <option value="">Todos</option>
+            @foreach(var v in Enum.GetValues(typeof(ControleTeste.Enums.StatusAlteracao))) {
+                <option value="@((int)v)">@v</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label>Sistema</label>
+        <select asp-for="Filter.Sistema" class="form-select">
+            <option value="">Todos</option>
+            @foreach(var v in Enum.GetValues(typeof(ControleTeste.Enums.SistemaAlteracao))) {
+                <option value="@((int)v)">@v</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label>Tipo</label>
+        <select asp-for="Filter.Tipo" class="form-select">
+            <option value="">Todos</option>
+            @foreach(var v in Enum.GetValues(typeof(ControleTeste.Enums.TipoAlteracao))) {
+                <option value="@((int)v)">@v</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2">
+        <label>Buscar</label>
+        <input asp-for="Filter.Search" class="form-control" placeholder="Número ou título" />
+    </div>
+
+    <div class="col-12">
+        <button class="btn btn-primary">Pesquisar</button>
+        <a class="btn btn-success" asp-page-handler="ExportCsv">Exportar CSV</a>
+        <a class="btn btn-secondary" asp-page-handler="ExportExcel">Exportar Excel</a>
+    </div>
+</form>
+
+<table class="table table-sm table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Numero</th>
+            <th>Título</th>
+            <th>Descrição</th>
+            <th>Menu/Sistema</th>
+            <th>Tipo</th>
+            <th>Status</th>
+            <th>Sistema</th>
+            <th>Data</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach(var r in Model.Rows)
+    {
+        <tr>
+            <td>@r.AlteracaoId</td>
+            <td>@r.NumeroAlteracao</td>
+            <td>@r.Titulo</td>
+            <td>@r.Descricao</td>
+            <td>@r.MenuSistema</td>
+            <td>@r.Tipo</td>
+            <td>@r.Status</td>
+            <td>@r.Sistema</td>
+            <td>@r.DataAbertura.ToString("dd/MM/yyyy HH:mm")</td>
+        </tr>
+    }
+    </tbody>
+</table>

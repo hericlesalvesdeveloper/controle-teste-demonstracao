@@ -1,0 +1,28 @@
+@page "{id:int}"
+@model ControleTeste.Pages.Alteracoes.ChangeStatusModel
+
+<h1>Alterar Status</h1>
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label class="form-label">Status</label>
+        <select asp-for="Status" class="form-select">
+            @foreach(var v in Enum.GetValues(typeof(ControleTeste.Enums.StatusAlteracao))) {
+                <option value="@((int)v)">@v</option>
+            }
+        </select>
+        <span asp-validation-for="Status" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Observação</label>
+        <textarea asp-for="Observacao" class="form-control"></textarea>
+        <span asp-validation-for="Observacao" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Alterar</button>
+    <a class="btn btn-secondary" href="/Alteracoes">Voltar</a>
+</form>

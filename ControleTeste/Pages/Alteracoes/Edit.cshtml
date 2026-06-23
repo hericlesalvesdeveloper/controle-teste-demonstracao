@@ -1,0 +1,65 @@
+@page "{id:int}"
+@model ControleTeste.Pages.Alteracoes.EditModel
+
+<h1>Editar Alteração</h1>
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label class="form-label">Número</label>
+        <input asp-for="Alteracao.NumeroAlteracao" class="form-control" />
+        <span asp-validation-for="Alteracao.NumeroAlteracao" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Título</label>
+        <input asp-for="Alteracao.Titulo" class="form-control" />
+        <span asp-validation-for="Alteracao.Titulo" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Descrição</label>
+        <textarea asp-for="Alteracao.Descricao" class="form-control"></textarea>
+        <span asp-validation-for="Alteracao.Descricao" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Tipo</label>
+        <select asp-for="Alteracao.Tipo" class="form-select">
+            @foreach(var v in Enum.GetValues(typeof(ControleTeste.Enums.TipoAlteracao))) {
+                <option value="@((int)v)" selected="@(Model.Alteracao.Tipo == (ControleTeste.Enums.TipoAlteracao)v)">@v</option>
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Status</label>
+        <select asp-for="Alteracao.Status" class="form-select">
+            @foreach(var v in Enum.GetValues(typeof(ControleTeste.Enums.StatusAlteracao))) {
+                <option value="@((int)v)" selected="@(Model.Alteracao.Status == (ControleTeste.Enums.StatusAlteracao)v)">@v</option>
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Sistema</label>
+        <select asp-for="Alteracao.Sistema" class="form-select">
+            @foreach(var v in Enum.GetValues(typeof(ControleTeste.Enums.SistemaAlteracao))) {
+                <option value="@((int)v)" selected="@(Model.Alteracao.Sistema == (ControleTeste.Enums.SistemaAlteracao)v)">@v</option>
+            }
+        </select>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Data de Abertura</label>
+        <input asp-for="Alteracao.DataAbertura" class="form-control" type="datetime-local" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Observação</label>
+        <textarea asp-for="Alteracao.Observacao" class="form-control"></textarea>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Menu/Sistema</label>
+        <input asp-for="Alteracao.MenuSistema" class="form-control" />
+        <span asp-validation-for="Alteracao.MenuSistema" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a class="btn btn-secondary" href="/Alteracoes">Voltar</a>
+</form>

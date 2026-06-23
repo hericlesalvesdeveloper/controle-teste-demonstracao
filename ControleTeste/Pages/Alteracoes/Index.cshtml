@@ -1,0 +1,109 @@
+@page
+@model ControleTeste.Pages.Alteracoes.IndexModel
+
+<h1>Alterações</h1>
+
+<form method="get" class="row g-3 mb-3">
+    <div class="col-md-2">
+        <input asp-for="Search" class="form-control" placeholder="Número ou título" />
+    </div>
+    <div class="col-md-2">
+        <select asp-for="StatusFilter" class="form-select">
+            <option value="">Todos os status</option>
+            @foreach(var v in Enum.GetValues(typeof(ControleTeste.Enums.StatusAlteracao))) {
+                <option value="@((int)v)">@v</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select asp-for="SistemaFilter" class="form-select">
+            <option value="">Todos os sistemas</option>
+            @foreach(var v in Enum.GetValues(typeof(ControleTeste.Enums.SistemaAlteracao))) {
+                <option value="@((int)v)">@v</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-2">
+        <select asp-for="PageSize" class="form-select">
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="20">20</option>
+        </select>
+    </div>
+    <div class="col-md-4">
+        <button class="btn btn-primary">Filtrar</button>
+        <a class="btn btn-secondary" href="/Alteracoes">Limpar</a>
+        <a class="btn btn-success" href="/Alteracoes/Create">Nova Alteração</a>
+        <a class="btn btn-outline-info" href="/Relatorios">Relatórios</a>
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Numero</th>
+            <th>Título</th>
+            <th>Status</th>
+            <th>Sistema</th>
+            <th>Menu/Sistema</th>
+            <th>Observação</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach(var a in Model.Alteracoes)
+    {
+        <tr>
+            <td>@a.AlteracaoId</td>
+            <td>@a.NumeroAlteracao</td>
+            <td>@a.Titulo</td>
+            <td>
+                @{
+                    var badgeClass = a.Status switch
+                    {
+                        ControleTeste.Enums.StatusAlteracao.Aberta => "bg-primary",
+                        ControleTeste.Enums.StatusAlteracao.EmDesenvolvimento => "bg-info",
+                        ControleTeste.Enums.StatusAlteracao.EmTeste => "bg-warning text-dark",
+                        ControleTeste.Enums.StatusAlteracao.Testada => "bg-success",
+                        ControleTeste.Enums.StatusAlteracao.Retorno => "bg-danger",
+                        _ => "bg-secondary"
+                    };
+                }
+                <span class="badge @badgeClass">@a.Status</span>
+            </td>
+            <td>@a.Sistema</td>
+            <td>@a.MenuSistema</td>
+            <td>@a.Observacao</td>
+            <td>
+                <a class="btn btn-sm btn-info" href="/Alteracoes/Details/@a.AlteracaoId">Detalhes</a>
+                <a class="btn btn-sm btn-secondary" href="/Alteracoes/Edit/@a.AlteracaoId">Editar</a>
+                <a class="btn btn-sm btn-warning" href="/Alteracoes/ChangeStatus/@a.AlteracaoId">Status</a>
+                <a class="btn btn-sm btn-danger" href="/Alteracoes/Delete/@a.AlteracaoId">Excluir</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+@{
+    var totalPages = (int)Math.Ceiling((double)Model.TotalItems / Model.PageSize);
+}
+
+<nav>
+    <ul class="pagination">
+        <li class="page-item @(Model.PageNumber<=1?"disabled":"")">
+            <a class="page-link" href="?pageNumber=@(Model.PageNumber-1)&pageSize=@Model.PageSize&search=@Model.Search&status=@(Model.StatusFilter.HasValue?(int)Model.StatusFilter.Value:String.Empty)&sistema=@(Model.SistemaFilter.HasValue?(int)Model.SistemaFilter.Value:String.Empty)">Anterior</a>
+        </li>
+
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            <li class="page-item @(i==Model.PageNumber?"active":"")"><a class="page-link" href="?pageNumber=@i&pageSize=@Model.PageSize&search=@Model.Search&status=@(Model.StatusFilter.HasValue?(int)Model.StatusFilter.Value:String.Empty)&sistema=@(Model.SistemaFilter.HasValue?(int)Model.SistemaFilter.Value:String.Empty)">@i</a></li>
+        }
+
+        <li class="page-item @(Model.PageNumber>=totalPages?"disabled":"")">
+            <a class="page-link" href="?pageNumber=@(Model.PageNumber+1)&pageSize=@Model.PageSize&search=@Model.Search&status=@(Model.StatusFilter.HasValue?(int)Model.StatusFilter.Value:String.Empty)&sistema=@(Model.SistemaFilter.HasValue?(int)Model.SistemaFilter.Value:String.Empty)">Próxima</a>
+        </li>
+    </ul>
+</nav>
+

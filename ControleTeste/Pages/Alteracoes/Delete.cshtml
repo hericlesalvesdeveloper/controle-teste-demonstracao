@@ -1,0 +1,11 @@
+@page "{id:int}"
+@model ControleTeste.Pages.Alteracoes.DeleteModel
+
+<h1>Excluir Alteração</h1>
+
+<div class="alert alert-warning">Tem certeza que deseja excluir a alteração <strong>@Model.Alteracao.NumeroAlteracao</strong> - @Model.Alteracao.Titulo ?</div>
+
+<form method="post">
+    <button type="submit" class="btn btn-danger">Confirmar Exclusão</button>
+    <a class="btn btn-secondary" href="/Alteracoes">Cancelar</a>
+</form>
