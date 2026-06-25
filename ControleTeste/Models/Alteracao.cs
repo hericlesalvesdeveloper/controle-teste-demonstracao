@@ -1,4 +1,5 @@
 ﻿using ControleTeste.Enums;
+using ControleTeste.Exceptions;
 
 namespace ControleTeste.Models;
 
@@ -29,19 +30,16 @@ public class Alteracao
         DataAbertura = dataAbertura;
         Observacao = observacao;
     }
-
     public void AlterarStatus(StatusAlteracao status, string? observacao)
     {
         if(status == StatusAlteracao.Retorno && string.IsNullOrEmpty(observacao))
         {
-            throw new ControleTeste.Exceptions.AppValidationException("Observação é obrigatória para o status de Retorno.");
+            throw new AppValidationException("Observação é obrigatória para o status de Retorno.");
         }
 
         Status = status;
         Observacao = observacao ?? string.Empty;
     }
-
-    // Permite atualizar campos básicos da alteração
     public void AtualizarDados(int numeroAlteracao, string titulo, string descricao, TipoAlteracao tipo, SistemaAlteracao sistema, string? menuSistema)
     {
         if (string.IsNullOrWhiteSpace(titulo))
@@ -54,8 +52,6 @@ public class Alteracao
         Sistema = sistema;
         MenuSistema = menuSistema ?? string.Empty;
     }
-
-    // Atualiza somente observação (pode ser usada sem alterar status)
     public void AtualizarObservacao(string? observacao)
     {
         Observacao = observacao ?? string.Empty;

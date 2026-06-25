@@ -1,6 +1,5 @@
 using ControleTeste.DTOs;
 using ControleTeste.Enums;
-using ControleTeste.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControleTeste.Controllers;

@@ -1,0 +1,24 @@
+@page "{id:int}"
+@model ControleTeste.Pages.Users.EditModel
+@{
+    ViewData["Title"] = "Editar Usuário";
+}
+
+<h1>Editar Usuário</h1>
+
+<form method="post">
+    <input type="hidden" asp-for="Input.Id" />
+    <div class="form-group">
+        <label>Username</label>
+        <input asp-for="Input.Username" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Nova Senha (opcional)</label>
+        <input asp-for="Input.Password" type="password" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Is Admin</label>
+        <input asp-for="Input.IsAdmin" type="checkbox" />
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar</button>
+</form>

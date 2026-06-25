@@ -1,6 +1,5 @@
 using ControleTeste.DTOs;
 using ControleTeste.Enums;
-using ControleTeste.Models;
 
 namespace ControleTeste.Repositories;
 

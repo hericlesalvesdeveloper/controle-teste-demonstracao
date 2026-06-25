@@ -2,9 +2,11 @@ using ControleTeste.DTOs;
 using ControleTeste.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ControleTeste.Pages.Alteracoes;
 
+[Authorize]
 public class CreateModel : PageModel
 {
     private readonly ControleTeste.Services.IAlteracaoService _service;

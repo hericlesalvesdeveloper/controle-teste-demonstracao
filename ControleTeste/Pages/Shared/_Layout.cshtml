@@ -12,9 +12,27 @@
             <a class="navbar-brand" href="/">ControleTeste</a>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav me-auto">
-                    <li class="nav-item"><a class="nav-link" href="/Alteracoes">Alterações</a></li>
+                    @if (User?.Identity?.IsAuthenticated == true)
+                    {
+                        <li class="nav-item"><a class="nav-link" href="/Alteracoes">Alterações</a></li>
+                    }
+                </ul>
+
+                <ul class="navbar-nav">
+                    @if (User?.Identity?.IsAuthenticated == true)
+                    {
+                        <li class="nav-item">
+                            <span class="navbar-text me-2">@User.Identity.Name</span>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="/Account/Logout">Logout</a></li>
+                    }
+                    else
+                    {
+                        <li class="nav-item"><a class="nav-link" href="/Account/Login">Login</a></li>
+                    }
                 </ul>
             </div>
+
         </div>
     </nav>
 

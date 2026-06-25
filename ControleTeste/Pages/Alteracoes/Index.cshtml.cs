@@ -3,9 +3,11 @@ using ControleTeste.Repositories;
 using ControleTeste.Enums;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ControleTeste.Pages.Alteracoes;
 
+[Authorize]
 public class IndexModel : PageModel
 {
     private readonly ControleTeste.Services.IAlteracaoService _service;

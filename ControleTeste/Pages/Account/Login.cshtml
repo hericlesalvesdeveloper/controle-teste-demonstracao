@@ -1,0 +1,27 @@
+@page
+@model ControleTeste.Pages.Account.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Login</h1>
+
+<form method="post">
+    <div class="form-group">
+        <label>Username</label>
+        <input asp-for="Input.Username" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label>Senha</label>
+        <input asp-for="Input.Password" type="password" class="form-control" />
+    </div>
+    <button type="submit" class="btn btn-primary">Entrar</button>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.Token))
+{
+    <div class="alert alert-success mt-3">
+        <p>Login bem-sucedido. Token JWT foi salvo em cookie 'AuthToken'.</p>
+        <p>Token (apenas para debug): <code>@Model.Token</code></p>
+    </div>
+}

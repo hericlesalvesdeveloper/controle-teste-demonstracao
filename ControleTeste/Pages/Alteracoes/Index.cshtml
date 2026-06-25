@@ -1,6 +1,18 @@
 @page
 @model ControleTeste.Pages.Alteracoes.IndexModel
 
+<ul class="nav nav-tabs mb-3" role="tablist">
+    <li class="nav-item" role="presentation">
+        <a class="nav-link active" href="/Alteracoes">Alterações</a>
+    </li>
+    @if (User?.HasClaim("isAdmin", "true") == true)
+    {
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" href="/Users/Create">Cadastrar Usuários</a>
+        </li>
+    }
+</ul>
+
 <h1>Alterações</h1>
 
 <form method="get" class="row g-3 mb-3">

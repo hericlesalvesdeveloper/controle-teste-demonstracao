@@ -11,6 +11,7 @@ namespace ControleTeste.Context
         }
 
         public DbSet<Alteracao> Alteracoes { get; set; }
+        public DbSet<Models.Usuario> Usuarios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
