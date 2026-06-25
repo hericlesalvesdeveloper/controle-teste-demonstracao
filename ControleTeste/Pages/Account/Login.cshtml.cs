@@ -52,7 +52,16 @@ namespace ControleTeste.Pages.Account
             var user = await _userService.ValidateCredentialsAsync(Input.Username, Input.Password);
             if (user == null)
             {
-                ModelState.AddModelError(string.Empty, "Credenciais inválidas");
+                // identificar se usuário existe para mostrar mensagem específica
+                var exists = await _userService.GetByUsernameAsync(Input.Username);
+                if (exists == null)
+                {
+                    ModelState.AddModelError(string.Empty, "Usuário não encontrado");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Senha incorreta");
+                }
                 return Page();
             }
 

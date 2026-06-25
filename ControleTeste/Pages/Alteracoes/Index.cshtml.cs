@@ -1,23 +1,30 @@
+using System.Linq;
 using ControleTeste.DTOs;
 using ControleTeste.Repositories;
 using ControleTeste.Enums;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using ControleTeste.Models;
+using ControleTeste.Services;
 
 namespace ControleTeste.Pages.Alteracoes;
 
 [Authorize]
 public class IndexModel : PageModel
 {
-    private readonly ControleTeste.Services.IAlteracaoService _service;
+    private readonly IAlteracaoService _service;
+    private readonly IUserService _userService;
 
-    public IndexModel(ControleTeste.Services.IAlteracaoService service)
+    public IndexModel(IAlteracaoService service, IUserService userService)
     {
         _service = service;
+        _userService = userService;
     }
 
     public IEnumerable<RespostaAlteracaoDto> Alteracoes { get; set; } = Enumerable.Empty<RespostaAlteracaoDto>();
+
+    public IEnumerable<Usuario> RecentUsers { get; set; } = Enumerable.Empty<Usuario>();
 
     [BindProperty(SupportsGet = true)]
     public int PageNumber { get; set; } = 1;
@@ -44,5 +51,8 @@ public class IndexModel : PageModel
         var paged = await _service.GetPagedAsync(PageNumber, PageSize, Search, StatusFilter, SistemaFilter);
         Alteracoes = paged.Items;
         TotalItems = paged.TotalItems;
+
+        var users = await _userService.GetAllAsync();
+        RecentUsers = users.Take(5);
     }
 }

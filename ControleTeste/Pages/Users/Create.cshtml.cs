@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using ControleTeste.Models;
@@ -22,8 +23,15 @@ namespace ControleTeste.Pages.Users
 
         public class InputModel
         {
+            [Required]
+            [StringLength(50, MinimumLength = 3)]
             public string Username { get; set; }
+
+            [Required]
+            [DataType(DataType.Password)]
+            [StringLength(100, MinimumLength = 6)]
             public string Password { get; set; }
+
             public bool IsAdmin { get; set; }
         }
 

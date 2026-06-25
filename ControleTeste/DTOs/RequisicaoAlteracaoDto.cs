@@ -19,7 +19,9 @@ public record RequisicaoAlteracaoDto(
     StatusAlteracao Status,
 
     SistemaAlteracao Sistema,
-    string? MenuSistema,
+
+    [Required]
+    string MenuSistema,
 
     DateTime DataAbertura,
 
