@@ -24,9 +24,10 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<ControleTesteContext>(options =>
-    options.UseSqlServer(connectionString));
+    options.UseSqlServer(connectionString, sqlOptions => sqlOptions.EnableRetryOnFailure()));
 
 builder.Services.AddScoped<IAlteracaoRepository, AlteracaoRepository>();
+
 builder.Services.AddScoped<IAlteracaoService,AlteracaoService>();
 
 // Users repository/service
