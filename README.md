@@ -44,7 +44,7 @@ Rodando o projeto localmente
 4. Executar:
    - dotnet run
    - Ou abrir a solução no Visual Studio e executar (F5)
-5. Acesse: https://localhost:5001/ (ou a porta configurada)
+5. Acesse: https://localhost:7069/ (ou a porta configurada)
 
 Autenticação e autorização
 --------------------------
