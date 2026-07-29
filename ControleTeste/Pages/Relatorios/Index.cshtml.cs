@@ -14,18 +14,18 @@ public class IndexModel : PageModel
     public IndexModel(ControleTeste.Services.IAlteracaoService service)
     {
         _service = service;
-        Filter = new ReportFilterDto();
+        Filter = new FiltroRelatorioDto();
     }
 
     [BindProperty(SupportsGet = true)]
-    public ReportFilterDto Filter { get; set; }
+    public FiltroRelatorioDto Filter { get; set; }
 
-    public IEnumerable<ReportRowDto> Rows { get; set; } = Enumerable.Empty<ReportRowDto>();
+    public IEnumerable<LinhaRelatorioDto> Rows { get; set; } = Enumerable.Empty<LinhaRelatorioDto>();
 
     public async Task OnGetAsync(int pageNumber = 1, int pageSize = 25)
     {
         var paged = await _service.GetReportAsync(pageNumber, pageSize, Filter);
-        Rows = paged.Items;
+        Rows = paged.Itens;
     }
 
     public async Task<IActionResult> OnGetExportCsvAsync()

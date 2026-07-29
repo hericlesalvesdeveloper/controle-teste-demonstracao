@@ -216,6 +216,8 @@ csx/
 
 .vs/
 
+appsettings.json
+
 # Microsoft Azure Emulator
 ecf/
 rcf/

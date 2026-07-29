@@ -2,15 +2,15 @@ using ControleTeste.Enums;
 
 namespace ControleTeste.DTOs;
 
-public class ReportFilterDto
+public class FiltroRelatorioDto
 {
-    public DateTime? DateFrom { get; set; }
-    public DateTime? DateTo { get; set; }
+    public DateTime? DataInicio { get; set; }
+    public DateTime? DataFim { get; set; }
     public StatusAlteracao? Status { get; set; }
     public SistemaAlteracao? Sistema { get; set; }
     public TipoAlteracao? Tipo { get; set; }
-    public string? Search { get; set; }
-    public string? OrderBy { get; set; }
+    public string? Pesquisa { get; set; }
+    public string? OrdenarPor { get; set; }
 
-    public ReportFilterDto() { }
+    public FiltroRelatorioDto() { }
 }

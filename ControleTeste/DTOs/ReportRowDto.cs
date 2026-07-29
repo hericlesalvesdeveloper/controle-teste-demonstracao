@@ -2,7 +2,7 @@ using ControleTeste.Enums;
 
 namespace ControleTeste.DTOs;
 
-public record ReportRowDto(
+public record LinhaRelatorioDto(
     int AlteracaoId,
     int NumeroAlteracao,
     string Titulo,

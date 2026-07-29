@@ -67,19 +67,19 @@ public class AlteracaoController : ControllerBase
 
     // Alterar status (ex.: para Retorno com observação obrigatória)
     [HttpPatch("{id:int}/status")]
-    public async Task<IActionResult> ChangeStatus(int id, [FromQuery] StatusAlteracao status, [FromQuery] string? observacao)
+    public async Task<IActionResult> AlterarStatus(int id, [FromQuery] StatusAlteracao status, [FromQuery] string? observacao)
     {
-        await _service.ChangeStatusAsync(id, status, observacao);
+        await _service.AlterarStatusAsync(id, status, observacao);
         return NoContent();
     }
 
     // Endpoint para alterar status via POST com body JSON
     [HttpPost("{id:int}/change")]
-    public async Task<IActionResult> ChangeStatusPost(int id, [FromBody] DTOs.ChangeStatusRequestDto request)
+    public async Task<IActionResult> AlterarStatusPost(int id, [FromBody] DTOs.RequisicaoAlteracaoStatusDto request)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
-        await _service.ChangeStatusAsync(id, request.Status, request.Observacao);
+        await _service.AlterarStatusAsync(id, request.Status, request.Observacao);
         return NoContent();
     }
 }

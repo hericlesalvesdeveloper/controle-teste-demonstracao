@@ -6,11 +6,11 @@
 <form method="get" class="row g-3 mb-3">
     <div class="col-md-2">
         <label>De</label>
-        <input asp-for="Filter.DateFrom" type="date" class="form-control" />
+        <input asp-for="Filter.DataInicio" type="date" class="form-control" />
     </div>
     <div class="col-md-2">
         <label>Até</label>
-        <input asp-for="Filter.DateTo" type="date" class="form-control" />
+        <input asp-for="Filter.DataFim" type="date" class="form-control" />
     </div>
     <div class="col-md-2">
         <label>Status</label>
@@ -41,7 +41,7 @@
     </div>
     <div class="col-md-2">
         <label>Buscar</label>
-        <input asp-for="Filter.Search" class="form-control" placeholder="Número ou título" />
+        <input asp-for="Filter.Pesquisa" class="form-control" placeholder="Número ou título" />
     </div>
 
     <div class="col-12">

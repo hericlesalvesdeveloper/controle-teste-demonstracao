@@ -17,7 +17,7 @@
 
 <form method="get" class="row g-3 mb-3">
     <div class="col-md-2">
-        <input asp-for="Search" class="form-control" placeholder="Número ou título" />
+        <input asp-for="Pesquisa" class="form-control" placeholder="Número ou título" />
     </div>
     <div class="col-md-2">
         <select asp-for="StatusFilter" class="form-select">
@@ -107,7 +107,7 @@
             <td>
                 <a class="btn btn-sm btn-info" href="/Alteracoes/Details/@a.AlteracaoId">Detalhes</a>
                 <a class="btn btn-sm btn-secondary" href="/Alteracoes/Edit/@a.AlteracaoId">Editar</a>
-                <a class="btn btn-sm btn-warning" href="/Alteracoes/ChangeStatus/@a.AlteracaoId">Status</a>
+                <a class="btn btn-sm btn-warning" href="/Alteracoes/AlterarStatus/@a.AlteracaoId">Status</a>
                 <a class="btn btn-sm btn-danger" href="/Alteracoes/Delete/@a.AlteracaoId">Excluir</a>
             </td>
         </tr>
@@ -122,16 +122,16 @@
 <nav>
     <ul class="pagination">
         <li class="page-item @(Model.PageNumber<=1?"disabled":"")">
-            <a class="page-link" href="?pageNumber=@(Model.PageNumber-1)&pageSize=@Model.PageSize&search=@Model.Search&status=@(Model.StatusFilter.HasValue?(int)Model.StatusFilter.Value:String.Empty)&sistema=@(Model.SistemaFilter.HasValue?(int)Model.SistemaFilter.Value:String.Empty)">Anterior</a>
+            <a class="page-link" href="?pageNumber=@(Model.PageNumber-1)&pageSize=@Model.PageSize&pesquisa=@Model.Pesquisa&status=@(Model.StatusFilter.HasValue?(int)Model.StatusFilter.Value:String.Empty)&sistema=@(Model.SistemaFilter.HasValue?(int)Model.SistemaFilter.Value:String.Empty)">Anterior</a>
         </li>
 
         @for (int i = 1; i <= totalPages; i++)
         {
-            <li class="page-item @(i==Model.PageNumber?"active":"")"><a class="page-link" href="?pageNumber=@i&pageSize=@Model.PageSize&search=@Model.Search&status=@(Model.StatusFilter.HasValue?(int)Model.StatusFilter.Value:String.Empty)&sistema=@(Model.SistemaFilter.HasValue?(int)Model.SistemaFilter.Value:String.Empty)">@i</a></li>
+            <li class="page-item @(i==Model.PageNumber?"active":"")"><a class="page-link" href="?pageNumber=@i&pageSize=@Model.PageSize&pesquisa=@Model.Pesquisa&status=@(Model.StatusFilter.HasValue?(int)Model.StatusFilter.Value:String.Empty)&sistema=@(Model.SistemaFilter.HasValue?(int)Model.SistemaFilter.Value:String.Empty)">@i</a></li>
         }
 
         <li class="page-item @(Model.PageNumber>=totalPages?"disabled":"")">
-            <a class="page-link" href="?pageNumber=@(Model.PageNumber+1)&pageSize=@Model.PageSize&search=@Model.Search&status=@(Model.StatusFilter.HasValue?(int)Model.StatusFilter.Value:String.Empty)&sistema=@(Model.SistemaFilter.HasValue?(int)Model.SistemaFilter.Value:String.Empty)">Próxima</a>
+            <a class="page-link" href="?pageNumber=@(Model.PageNumber+1)&pageSize=@Model.PageSize&pesquisa=@Model.Pesquisa&status=@(Model.StatusFilter.HasValue?(int)Model.StatusFilter.Value:String.Empty)&sistema=@(Model.SistemaFilter.HasValue?(int)Model.SistemaFilter.Value:String.Empty)">Próxima</a>
         </li>
     </ul>
 </nav>

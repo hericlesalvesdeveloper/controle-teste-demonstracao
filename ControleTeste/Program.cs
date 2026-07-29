@@ -9,13 +9,11 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Allow overriding URLs via config or environment; default to localhost:7069
 var defaultUrls = builder.Configuration["Application:Urls"] ?? Environment.GetEnvironmentVariable("ASPNETCORE_URLS") ?? "http://localhost:7069";
 builder.WebHost.UseUrls(defaultUrls);
 
 builder.Services.AddControllers();
 
-// Habilita Razor Pages para front-end
 builder.Services.AddRazorPages();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -30,7 +28,6 @@ builder.Services.AddScoped<IAlteracaoRepository, AlteracaoRepository>();
 
 builder.Services.AddScoped<IAlteracaoService,AlteracaoService>();
 
-// Users repository/service
 builder.Services.AddScoped<ControleTeste.Repositories.IUserRepository, ControleTeste.Repositories.UserRepository>();
 builder.Services.AddScoped<ControleTeste.Services.IUserService, ControleTeste.Services.UserService>();
 
@@ -64,7 +61,6 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(jwtKey)
     };
 
-    // Permitir ler token do cookie AuthToken para uso no browser simples
     options.Events = new JwtBearerEvents
     {
         OnMessageReceived = context =>
@@ -79,9 +75,6 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-
-
-// Authorization policy: IsAdmin (claim isAdmin == "true")
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("IsAdmin", policy => policy.RequireClaim("isAdmin", "true"));
@@ -89,9 +82,8 @@ builder.Services.AddAuthorization(options =>
 
 var app = builder.Build();
 
-// Seed default admin user (development)
-await ControleTeste.Data.SeedData.EnsureAdminAsync(app.Services);
 
+await ControleTeste.Data.SeedData.EnsureAdminAsync(app.Services);
 
 if (app.Environment.IsDevelopment())
 {
@@ -99,7 +91,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Global exception handling middleware
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
@@ -107,7 +98,6 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Redirect root to login (or to Alteracoes if already authenticated)
 app.MapGet("/", async (HttpContext http) =>
 {
     if (http.User?.Identity?.IsAuthenticated == true)

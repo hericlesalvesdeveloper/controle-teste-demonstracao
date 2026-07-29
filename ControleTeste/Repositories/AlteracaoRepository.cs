@@ -60,7 +60,7 @@ public class AlteracaoRepository : IAlteracaoRepository
         return true;
     }
 
-    public async Task<bool> ChangeStatusAsync(int id, StatusAlteracao status, string? observacao)
+    public async Task<bool> AlterarStatusAsync(int id, StatusAlteracao status, string? observacao)
     {
         var a = await _context.Alteracoes.FindAsync(id);
         if (a == null) throw new ControleTeste.Exceptions.NotFoundException($"Alteração com id {id} não encontrada.");
@@ -84,7 +84,7 @@ public class AlteracaoRepository : IAlteracaoRepository
         return list.Select(MapToDto);
     }
 
-    public async Task<ControleTeste.DTOs.PagedResult<RespostaAlteracaoDto>> GetPagedAsync(int pageNumber, int pageSize, string? search, StatusAlteracao? status, SistemaAlteracao? sistema)
+    public async Task<ControleTeste.DTOs.ResultadoPaginado<RespostaAlteracaoDto>> GetPagedAsync(int pageNumber, int pageSize, string? search, StatusAlteracao? status, SistemaAlteracao? sistema)
     {
         var query = _context.Alteracoes.AsNoTracking().AsQueryable();
 
@@ -108,26 +108,26 @@ public class AlteracaoRepository : IAlteracaoRepository
             .Take(pageSize)
             .ToListAsync();
 
-        return new ControleTeste.DTOs.PagedResult<RespostaAlteracaoDto>(items.Select(MapToDto), total, pageNumber, pageSize);
+        return new ControleTeste.DTOs.ResultadoPaginado<RespostaAlteracaoDto>(items.Select(MapToDto), total, pageNumber, pageSize);
     }
 
-    public async Task<ControleTeste.DTOs.PagedResult<ControleTeste.DTOs.ReportRowDto>> GetReportAsync(int pageNumber, int pageSize, ControleTeste.DTOs.ReportFilterDto filter)
+    public async Task<ControleTeste.DTOs.ResultadoPaginado<ControleTeste.DTOs.LinhaRelatorioDto>> GetReportAsync(int pageNumber, int pageSize, ControleTeste.DTOs.FiltroRelatorioDto filter)
     {
         var query = _context.Alteracoes.AsNoTracking().AsQueryable();
 
-        if (filter.DateFrom.HasValue)
-            query = query.Where(a => a.DataAbertura >= filter.DateFrom.Value);
-        if (filter.DateTo.HasValue)
-            query = query.Where(a => a.DataAbertura <= filter.DateTo.Value);
+        if (filter.DataInicio.HasValue)
+            query = query.Where(a => a.DataAbertura >= filter.DataInicio.Value);
+        if (filter.DataFim.HasValue)
+            query = query.Where(a => a.DataAbertura <= filter.DataFim.Value);
         if (filter.Status.HasValue)
             query = query.Where(a => a.Status == filter.Status.Value);
         if (filter.Sistema.HasValue)
             query = query.Where(a => a.Sistema == filter.Sistema.Value);
         if (filter.Tipo.HasValue)
             query = query.Where(a => a.Tipo == filter.Tipo.Value);
-        if (!string.IsNullOrWhiteSpace(filter.Search))
+        if (!string.IsNullOrWhiteSpace(filter.Pesquisa))
         {
-            var term = filter.Search.ToLower();
+            var term = filter.Pesquisa.ToLower();
             query = query.Where(a => a.Titulo.ToLower().Contains(term) || a.NumeroAlteracao.ToString().Contains(term));
         }
 
@@ -137,36 +137,36 @@ public class AlteracaoRepository : IAlteracaoRepository
             .OrderByDescending(a => a.DataAbertura)
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
-            .Select(a => new ControleTeste.DTOs.ReportRowDto(a.AlteracaoId, a.NumeroAlteracao, a.Titulo, a.Descricao, a.MenuSistema, a.Tipo, a.Status, a.Sistema, a.DataAbertura, a.Observacao))
+            .Select(a => new ControleTeste.DTOs.LinhaRelatorioDto(a.AlteracaoId, a.NumeroAlteracao, a.Titulo, a.Descricao, a.MenuSistema, a.Tipo, a.Status, a.Sistema, a.DataAbertura, a.Observacao))
             .ToListAsync();
 
-        return new ControleTeste.DTOs.PagedResult<ControleTeste.DTOs.ReportRowDto>(items, total, pageNumber, pageSize);
+        return new ControleTeste.DTOs.ResultadoPaginado<ControleTeste.DTOs.LinhaRelatorioDto>(items, total, pageNumber, pageSize);
     }
 
-    public async Task<IEnumerable<ControleTeste.DTOs.ReportRowDto>> GetReportRowsAsync(ControleTeste.DTOs.ReportFilterDto filter, int maxRows)
+    public async Task<IEnumerable<ControleTeste.DTOs.LinhaRelatorioDto>> GetReportRowsAsync(ControleTeste.DTOs.FiltroRelatorioDto filter, int maxRows)
     {
         var query = _context.Alteracoes.AsNoTracking().AsQueryable();
 
-        if (filter.DateFrom.HasValue)
-            query = query.Where(a => a.DataAbertura >= filter.DateFrom.Value);
-        if (filter.DateTo.HasValue)
-            query = query.Where(a => a.DataAbertura <= filter.DateTo.Value);
+        if (filter.DataInicio.HasValue)
+            query = query.Where(a => a.DataAbertura >= filter.DataInicio.Value);
+        if (filter.DataFim.HasValue)
+            query = query.Where(a => a.DataAbertura <= filter.DataFim.Value);
         if (filter.Status.HasValue)
             query = query.Where(a => a.Status == filter.Status.Value);
         if (filter.Sistema.HasValue)
             query = query.Where(a => a.Sistema == filter.Sistema.Value);
         if (filter.Tipo.HasValue)
             query = query.Where(a => a.Tipo == filter.Tipo.Value);
-        if (!string.IsNullOrWhiteSpace(filter.Search))
+        if (!string.IsNullOrWhiteSpace(filter.Pesquisa))
         {
-            var term = filter.Search.ToLower();
+            var term = filter.Pesquisa.ToLower();
             query = query.Where(a => a.Titulo.ToLower().Contains(term) || a.NumeroAlteracao.ToString().Contains(term));
         }
 
         var items = await query
             .OrderByDescending(a => a.DataAbertura)
             .Take(maxRows)
-            .Select(a => new ControleTeste.DTOs.ReportRowDto(a.AlteracaoId, a.NumeroAlteracao, a.Titulo, a.Descricao, a.MenuSistema, a.Tipo, a.Status, a.Sistema, a.DataAbertura, a.Observacao))
+            .Select(a => new ControleTeste.DTOs.LinhaRelatorioDto(a.AlteracaoId, a.NumeroAlteracao, a.Titulo, a.Descricao, a.MenuSistema, a.Tipo, a.Status, a.Sistema, a.DataAbertura, a.Observacao))
             .ToListAsync();
 
         return items;

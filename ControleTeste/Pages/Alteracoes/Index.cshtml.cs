@@ -35,7 +35,7 @@ public class IndexModel : PageModel
     public int TotalItems { get; set; }
 
     [BindProperty(SupportsGet = true)]
-    public string? Search { get; set; }
+    public string? Pesquisa { get; set; }
 
     [BindProperty(SupportsGet = true)]
     public StatusAlteracao? StatusFilter { get; set; }
@@ -48,9 +48,9 @@ public class IndexModel : PageModel
         PageNumber = PageNumber < 1 ? 1 : PageNumber;
         PageSize = PageSize <= 0 ? 10 : PageSize;
 
-        var paged = await _service.GetPagedAsync(PageNumber, PageSize, Search, StatusFilter, SistemaFilter);
-        Alteracoes = paged.Items;
-        TotalItems = paged.TotalItems;
+        var paged = await _service.GetPagedAsync(PageNumber, PageSize, Pesquisa, StatusFilter, SistemaFilter);
+        Alteracoes = paged.Itens;
+        TotalItems = paged.TotalItens;
 
         var users = await _userService.GetAllAsync();
         RecentUsers = users.Take(5);

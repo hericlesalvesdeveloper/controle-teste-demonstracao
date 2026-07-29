@@ -8,11 +8,11 @@ using Microsoft.AspNetCore.Authorization;
 namespace ControleTeste.Pages.Alteracoes;
 
 [Authorize]
-public class ChangeStatusModel : PageModel
+public class AlterarStatusModel : PageModel
 {
     private readonly ControleTeste.Services.IAlteracaoService _service;
 
-    public ChangeStatusModel(ControleTeste.Services.IAlteracaoService service)
+    public AlterarStatusModel(ControleTeste.Services.IAlteracaoService service)
     {
         _service = service;
     }
@@ -47,7 +47,7 @@ public class ChangeStatusModel : PageModel
     {
         try
         {
-            await _service.ChangeStatusAsync(Id, Status, Observacao);
+            await _service.AlterarStatusAsync(Id, Status, Observacao);
             return RedirectToPage("/Alteracoes/Index");
         }
         catch (ControleTeste.Exceptions.AppValidationException ex)

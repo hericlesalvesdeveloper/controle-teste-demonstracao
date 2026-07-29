@@ -11,10 +11,10 @@ public interface IAlteracaoRepository
     Task<RespostaAlteracaoDto> AddAsync(int numero, RequisicaoAlteracaoDto dto);
     Task<bool> UpdateAsync(int id, RequisicaoAlteracaoDto dto, int numero);
     Task<bool> DeleteAsync(int id);
-    Task<bool> ChangeStatusAsync(int id, StatusAlteracao status, string? observacao);
+    Task<bool> AlterarStatusAsync(int id, StatusAlteracao status, string? observacao);
     Task<IEnumerable<RespostaAlteracaoDto>> GetByStatusAsync(StatusAlteracao status);
     Task<IEnumerable<RespostaAlteracaoDto>> GetWithObservacaoAsync();
-    Task<ControleTeste.DTOs.PagedResult<RespostaAlteracaoDto>> GetPagedAsync(int pageNumber, int pageSize, string? search, StatusAlteracao? status, SistemaAlteracao? sistema);
-    Task<ControleTeste.DTOs.PagedResult<ControleTeste.DTOs.ReportRowDto>> GetReportAsync(int pageNumber, int pageSize, ControleTeste.DTOs.ReportFilterDto filter);
-    Task<IEnumerable<ControleTeste.DTOs.ReportRowDto>> GetReportRowsAsync(ControleTeste.DTOs.ReportFilterDto filter, int maxRows);
+    Task<ControleTeste.DTOs.ResultadoPaginado<RespostaAlteracaoDto>> GetPagedAsync(int pageNumber, int pageSize, string? search, StatusAlteracao? status, SistemaAlteracao? sistema);
+    Task<ControleTeste.DTOs.ResultadoPaginado<ControleTeste.DTOs.LinhaRelatorioDto>> GetReportAsync(int pageNumber, int pageSize, ControleTeste.DTOs.FiltroRelatorioDto filter);
+    Task<IEnumerable<ControleTeste.DTOs.LinhaRelatorioDto>> GetReportRowsAsync(ControleTeste.DTOs.FiltroRelatorioDto filter, int maxRows);
 }

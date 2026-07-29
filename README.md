@@ -5,6 +5,16 @@ Visão Geral
 -----------
 Aplicação web em ASP.NET Core Razor Pages (.NET 8) para controle de alterações e gestão de usuários. Usa padrão Repository/Service, autenticação via JWT (token em cookie HttpOnly) e autorização baseada em claim isAdmin para operações administrativas.
 
+Preparar o arquivo de configuração (appsettings)
+---------------------------------------------
+Este repositório contém um exemplo de configuração sem valores sensíveis em `ControleTeste/appsettings.example.json` para facilitar publicação pública do código. Antes de rodar localmente, copie o arquivo de exemplo para `ControleTeste/appsettings.json` e atualize os valores:
+
+- `ConnectionStrings:DefaultConnection` — ajuste para seu servidor de banco (ex.: `Server=localhost;Database=ControleAlteracoes;User Id=sa;Password=SuaSenha;TrustServerCertificate=True;`).
+- `JwtSettings:Key` — substitua por uma chave forte (mínimo 32 caracteres).
+- `DefaultAdmin` — ajuste usuário/senha iniciais se necessário.
+
+NÃO comite `ControleTeste/appsettings.json` com credenciais reais; use o arquivo de exemplo para compartilhar a estrutura.
+
 Público-alvo do README
 ----------------------
 Desenvolvedores que vão: rodar localmente, criar novas features (Razor Pages), manter serviços/repositórios e entender o fluxo de autenticação/autorizações.

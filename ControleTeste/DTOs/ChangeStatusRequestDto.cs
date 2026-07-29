@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ControleTeste.DTOs;
 
-public record ChangeStatusRequestDto(
+public record RequisicaoAlteracaoStatusDto(
     [property: Required]
     StatusAlteracao Status,
     string? Observacao

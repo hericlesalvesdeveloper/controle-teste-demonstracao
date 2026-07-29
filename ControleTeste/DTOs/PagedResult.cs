@@ -1,5 +1,5 @@
 namespace ControleTeste.DTOs;
 
-public record PagedResult<T>(IEnumerable<T> Items, int TotalItems, int PageNumber, int PageSize)
+public record ResultadoPaginado<T>(IEnumerable<T> Itens, int TotalItens, int NumeroPagina, int TamanhoPagina)
 {
 }
